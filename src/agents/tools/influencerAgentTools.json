@@ -1,0 +1,28 @@
+{
+    "influencerAgentTools": [
+        {
+            "type": "function",
+            "function": {
+                "name": "returnInfluencers",
+                "description": "Return the influencers based on the user preferences",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "influencers": {
+                            "type": "array",
+                            "description": "The influencers based on the user preferences",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "influencerId": {"type": "string"},
+                                    "influencerName": {"type": "string"}
+                                }
+                            }
+                        }
+                    },
+                    "required": ["influencers"]
+                }
+            }
+        }
+    ]
+}

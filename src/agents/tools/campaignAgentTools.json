@@ -1,0 +1,94 @@
+{
+    "campaignAgentTools": [
+        {
+            "type": "function",
+            "function": {
+                "name": "createCampaign",
+                "description": "Creates a new campaign with the given parameters.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "campaignName": { "type": "string", "description": "Campaign name" },
+                        "description": { "type": "string", "description": "Campaign description" },
+                        "startDate": { "type": "string", "format": "date-time", "description": "Start date (ISO 8601)" },
+                        "endDate": { "type": "string", "format": "date-time", "description": "End date (ISO 8601)" },
+                        "objective": { 
+                            "type": "string", 
+                            "enum": ["brand_awareness", "engagement", "conversions"],
+                            "description": "Campaign objective"
+                        },
+                        "totalBudget": { "type": "number", "description": "Total budget" },
+                        "targetAudience": {
+                            "type": "object",
+                            "properties": {
+                                "location": { "type": "string", "description": "Target location" },
+                                "ageRange": { "type": "string", "description": "Target age range" },
+                                "gender": { "type": "string", "description": "Target gender" },
+                                "interests": { "type": "array", "items": { "type": "string" }, "description": "Target interests" }
+                            }
+                        },
+                        "preferredPlatforms": {
+                            "type": "array",
+                            "items": { "type": "string" },
+                            "description": "Preferred platforms (e.g., instagram, youtube)"
+                        },
+                        "languages": {
+                            "type": "array",
+                            "items": { "type": "string" },
+                            "description": "Languages (e.g., english, hindi)"
+                        }
+                    },
+                    "required": ["campaignName", "objective", "totalBudget", "targetAudience", "preferredPlatforms", "languages"]
+                }
+            }
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "editCampaign",
+                "description": "Edits an existing campaign. Only the provided fields in campaignToEdit will be updated.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "previousCampaignName": { "type": "string", "description": "The name of the campaign to edit (required)" },
+                        "campaignToEdit": {
+                            "type": "object",
+                            "properties": {
+                                "campaignName": { "type": "string", "description": "Campaign name" },
+                                "description": { "type": "string", "description": "Campaign description" },
+                                "startDate": { "type": "string", "format": "date-time", "description": "Start date (ISO 8601)" },
+                                "endDate": { "type": "string", "format": "date-time", "description": "End date (ISO 8601)" },
+                                "objective": { 
+                                    "type": "string", 
+                                    "enum": ["brand_awareness", "engagement", "conversions"],
+                                    "description": "Campaign objective"
+                                },
+                                "totalBudget": { "type": "number", "description": "Total budget" },
+                                "targetAudience": {
+                                    "type": "object",
+                                    "properties": {
+                                        "location": { "type": "string", "description": "Target location" },
+                                        "ageRange": { "type": "string", "description": "Target age range" },
+                                        "gender": { "type": "string", "description": "Target gender" },
+                                        "interests": { "type": "array", "items": { "type": "string" }, "description": "Target interests" }
+                                    }
+                                },
+                                "preferredPlatforms": {
+                                    "type": "array",
+                                    "items": { "type": "string" },
+                                    "description": "Preferred platforms (e.g., instagram, youtube)"
+                                },
+                                "languages": {
+                                    "type": "array",
+                                    "items": { "type": "string" },
+                                    "description": "Languages (e.g., english, hindi)"
+                                }
+                            }
+                        }
+                    },
+                    "required": ["previousCampaignName", "campaignToEdit"]
+                }
+            }
+        }
+    ]
+}

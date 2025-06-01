@@ -1,0 +1,132 @@
+[
+  {
+    "_id": "Rhea Kapoor",
+    "name": "Rhea Kapoor",
+    "bio": "Bringing Mumbai’s fashion streets to your screen ✨",
+    "location": "Mumbai, India",
+    "languages": ["Marathi", "Hindi", "English"],
+    "profileImage": "https://example.com/rhea.jpg",
+    "rating": 4.6,
+    "categories": ["fashion", "lifestyle", "beauty"],
+    "platforms": [
+      {
+        "name": "instagram",
+        "handle": "@rheafits",
+        "followers": 150000,
+        "engagementRate": 6.2,
+        "pastCollaborations": ["Lakme", "Myntra"]
+      },
+      {
+        "name": "youtube",
+        "handle": "@rhealooks",
+        "followers": 95000,
+        "engagementRate": 5.1,
+        "pastCollaborations": ["Nykaa", "Amazon Fashion"]
+      }
+    ]
+  },
+  {
+    "_id": "Karthik Reddy",
+    "name": "Karthik Reddy",
+    "bio": "Breaking tech myths & unboxing the future 📦💡",
+    "location": "Hyderabad, India",
+    "languages": ["Telugu", "Hindi", "English"],
+    "profileImage": "https://example.com/karthik.jpg",
+    "rating": 4.8,
+    "categories": ["tech", "gaming", "reviews"],
+    "platforms": [
+      {
+        "name": "youtube",
+        "handle": "@techreddy",
+        "followers": 220000,
+        "engagementRate": 4.3,
+        "pastCollaborations": ["OnePlus", "Asus"]
+      },
+      {
+        "name": "twitter",
+        "handle": "@karthiktech",
+        "followers": 53000,
+        "engagementRate": 3.5,
+        "pastCollaborations": ["NVIDIA", "Xiaomi"]
+      }
+    ]
+  },
+  {
+    "_id": "Priya Nair",
+    "name": "Priya Nair",
+    "bio": "Helping you stay fit, happy, and travel-ready 💪🌍",
+    "location": "Bangalore, India",
+    "languages": ["Kannada", "Hindi", "English"],
+    "profileImage": "https://example.com/priya.jpg",
+    "rating": 4.9,
+    "categories": ["fitness", "wellness", "travel"],
+    "platforms": [
+      {
+        "name": "instagram",
+        "handle": "@fitpriya",
+        "followers": 185000,
+        "engagementRate": 7.0,
+        "pastCollaborations": ["Cult.Fit", "Decathlon"]
+      },
+      {
+        "name": "youtube",
+        "handle": "@priyawellness",
+        "followers": 105000,
+        "engagementRate": 5.8,
+        "pastCollaborations": ["Tata Tea", "Wildcraft"]
+      }
+    ]
+  },
+  {
+    "_id": "Arjun Thakur",
+    "name": "Arjun Thakur",
+    "bio": "Showcasing India's folk music and indie fusion 🎶🇮🇳",
+    "location": "Jaipur, Rajasthan, India",
+    "languages": ["Rajasthani", "Hindi", "English"],
+    "profileImage": "https://example.com/arjun.jpg",
+    "rating": 4.5,
+    "categories": ["music", "culture", "folk"],
+    "platforms": [
+      {
+        "name": "youtube",
+        "handle": "@arjunbeats",
+        "followers": 175000,
+        "engagementRate": 6.1,
+        "pastCollaborations": ["Spotify India", "Red Bull Music"]
+      },
+      {
+        "name": "instagram",
+        "handle": "@folkfuse",
+        "followers": 89000,
+        "engagementRate": 4.9,
+        "pastCollaborations": ["Bira91", "Gaana"]
+      }
+    ]
+  },
+  {
+    "_id": "Meghna Das",
+    "name": "Meghna Das",
+    "bio": "Every recipe tells a story 🍲📖 From Kolkata to the world.",
+    "location": "Kolkata, West Bengal, India",
+    "languages": ["Bengali", "Hindi", "English"],
+    "profileImage": "https://example.com/meghna.jpg",
+    "rating": 4.7,
+    "categories": ["food", "home cooking", "culture"],
+    "platforms": [
+      {
+        "name": "instagram",
+        "handle": "@flavorsofmeghna",
+        "followers": 132000,
+        "engagementRate": 6.3,
+        "pastCollaborations": ["Swiggy", "Nestle India"]
+      },
+      {
+        "name": "facebook",
+        "handle": "@meghnacooks",
+        "followers": 78000,
+        "engagementRate": 4.4,
+        "pastCollaborations": ["Amul", "Maggi"]
+      }
+    ]
+  }
+]
