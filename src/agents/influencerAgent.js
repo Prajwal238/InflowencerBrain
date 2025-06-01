@@ -29,7 +29,7 @@ InfluencerAgent.prototype.getInfluencersForCampaignFromLLM = async function(camp
         },
         { 
             role: 'user', 
-            content: userPrompt ? userPrompt : `I need to find the top 3 best influencers for my campaign ${campaign.campaignName}.\n ` 
+            content: userPrompt ? userPrompt : `I need to find the top 5 best influencers for my campaign ${campaign.campaignName}.\n ` 
         }
     ];
     const response = await this.baseAgent.sendMessage({ messages, tools: this.defaultTools });

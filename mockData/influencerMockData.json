@@ -128,5 +128,135 @@
         "pastCollaborations": ["Amul", "Maggi"]
       }
     ]
+  },
+  {
+    "_id": "Sneha Iyer",
+    "name": "Sneha Iyer",
+    "bio": "Eco-friendly living advocate & sustainable style 🌿👗",
+    "location": "Pune, Maharashtra, India",
+    "languages": ["Marathi", "Hindi", "English"],
+    "profileImage": "https://example.com/sneha.jpg",
+    "rating": 4.7,
+    "categories": ["sustainability", "fashion", "lifestyle"],
+    "platforms": [
+      {
+        "name": "instagram",
+        "handle": "@sneha.green",
+        "followers": 98000,
+        "engagementRate": 6.5,
+        "pastCollaborations": ["Patagonia", "FabIndia"]
+      },
+      {
+        "name": "twitter",
+        "handle": "@green_sneha",
+        "followers": 42000,
+        "engagementRate": 3.9,
+        "pastCollaborations": ["WWF India"]
+      }
+    ]
+  },
+  {
+    "_id": "Rohit Malhotra",
+    "name": "Rohit Malhotra",
+    "bio": "Simplifying finance & investment for millennials 💰📈",
+    "location": "Delhi, India",
+    "languages": ["Hindi", "English"],
+    "profileImage": "https://example.com/rohit.jpg",
+    "rating": 4.9,
+    "categories": ["finance", "investment", "education"],
+    "platforms": [
+      {
+        "name": "youtube",
+        "handle": "@financero",
+        "followers": 210000,
+        "engagementRate": 5.2,
+        "pastCollaborations": ["Zerodha", "Groww"]
+      },
+      {
+        "name": "instagram",
+        "handle": "@rohitfinance",
+        "followers": 60000,
+        "engagementRate": 4.1,
+        "pastCollaborations": ["ET Money"]
+      }
+    ]
+  },
+  {
+    "_id": "Anjali Deshmukh",
+    "name": "Anjali Deshmukh",
+    "bio": "Mom life, parenting hacks & kid-friendly recipes 👶🍽️",
+    "location": "Chennai, Tamil Nadu, India",
+    "languages": ["Tamil", "Hindi", "English"],
+    "profileImage": "https://example.com/anjali.jpg",
+    "rating": 4.8,
+    "categories": ["parenting", "food", "lifestyle"],
+    "platforms": [
+      {
+        "name": "instagram",
+        "handle": "@momwithanjali",
+        "followers": 112000,
+        "engagementRate": 6.0,
+        "pastCollaborations": ["Johnson's Baby", "Pampers"]
+      },
+      {
+        "name": "facebook",
+        "handle": "@anjalikitchen",
+        "followers": 49000,
+        "engagementRate": 4.7,
+        "pastCollaborations": ["Britannia"]
+      }
+    ]
+  },
+  {
+    "_id": "Vikram Singh",
+    "name": "Vikram Singh",
+    "bio": "Exploring Indian street food, one bite at a time 🍢🔥",
+    "location": "Lucknow, Uttar Pradesh, India",
+    "languages": ["Hindi", "English", "Urdu"],
+    "profileImage": "https://example.com/vikram.jpg",
+    "rating": 4.6,
+    "categories": ["food", "travel", "culture"],
+    "platforms": [
+      {
+        "name": "youtube",
+        "handle": "@streetfoodvikram",
+        "followers": 160000,
+        "engagementRate": 5.9,
+        "pastCollaborations": ["Swiggy", "Zomato"]
+      },
+      {
+        "name": "instagram",
+        "handle": "@foodievikram",
+        "followers": 72000,
+        "engagementRate": 5.3,
+        "pastCollaborations": ["Ola Foods"]
+      }
+    ]
+  },
+  {
+    "_id": "Isha Kapoor",
+    "name": "Isha Kapoor",
+    "bio": "Yoga instructor & mindfulness coach 🧘‍♀️✨",
+    "location": "Rishikesh, Uttarakhand, India",
+    "languages": ["Hindi", "English"],
+    "profileImage": "https://example.com/isha.jpg",
+    "rating": 4.9,
+    "categories": ["fitness", "wellness", "mindfulness"],
+    "platforms": [
+      {
+        "name": "instagram",
+        "handle": "@ishayoga",
+        "followers": 140000,
+        "engagementRate": 7.5,
+        "pastCollaborations": ["Decathlon", "Patanjali"]
+      },
+      {
+        "name": "youtube",
+        "handle": "@ishamindful",
+        "followers": 95000,
+        "engagementRate": 6.0,
+        "pastCollaborations": ["Himalaya Wellness"]
+      }
+    ]
   }
 ]
