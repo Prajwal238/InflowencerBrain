@@ -9,6 +9,7 @@ print("Client: ", client)
 collection = client.get_or_create_collection("influencers")
 
 def add_to_vector_store(embedding, document, metadata):
+    print("CHROMA_DB_PATH While adding to vector store: ", CHROMA_DB_PATH)
     collection.add(
         embeddings=[embedding],
         documents=[document],
@@ -17,6 +18,7 @@ def add_to_vector_store(embedding, document, metadata):
     )
 
 def query_vector_store(query_embedding, top_k=10, where=None):
+    print("CHROMA_DB_PATH While querying vector store: ", CHROMA_DB_PATH)
     print("Collection: ", collection.get())
     results = collection.query(
         query_embeddings=[query_embedding],
