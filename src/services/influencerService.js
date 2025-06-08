@@ -54,7 +54,7 @@ InfluencerService.prototype.getInfluencersByCampaignId = async function(userId, 
 InfluencerService.prototype.getInfluencersForCampaignFromLLM = async function(userId, campaignId, userPrompt) {
     const campaign = await campaignModel.getCampaignById(campaignId);
 
-    userPrompt = userPrompt || `I need to find the top 5 best influencers for my campaign ${campaign.campaignName} whose objective is ${campaign.objective}`;
+    userPrompt = userPrompt || `I need to find the top 5 best influencers for my campaign ${campaign.campaignName}, here is its description: ${campaign.description}, and its objective: ${campaign.objective}`;
     const filters = await influencerAgent.getFiltersFromUserPromptForRetrieval(userPrompt);
     const response = await axios({
         method: 'POST',

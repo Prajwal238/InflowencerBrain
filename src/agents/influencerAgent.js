@@ -74,7 +74,7 @@ InfluencerAgent.prototype.getInfluencersForCampaignFromLLM = async function(infl
     if(response.type === 'tool_call') {
         const args = JSON.parse(response.toolCall.function.arguments);
         
-        const influencers = args.influencers.map(influencer => influencer.influencerId);
+        const influencers = args?.influencers?.map(influencer => influencer.influencerId);
         return await influencerModel.getInfluencersByIds(influencers);
     }
     return response;
