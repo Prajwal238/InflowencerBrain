@@ -37,7 +37,7 @@ def handle_discovery(user_query: str, filters: dict):
     where = build_where_clause(filters)
     embedding = embed_text(user_query)
     results = query_vector_store(embedding, top_k=7, where=where)
-
+    print("Influencers from Vector Store: ", results)
     # Extract influencer IDs from vector store metadata
     ids = [res['metadata']['influencerId'] for res in results]
 
@@ -45,5 +45,5 @@ def handle_discovery(user_query: str, filters: dict):
     client = MongoClient(os.getenv("MONGODB_URI"))
     coll = client["influencer_app"]["influencers"]
     profiles = list(coll.find({"_id": {"$in": ids}}))
-
+    print("Influencers from MongoDB: ", profiles)
     return profiles

@@ -67,7 +67,9 @@ InfluencerService.prototype.getInfluencersForCampaignFromLLM = async function(us
           filters: filters
         },
     });
+    console.log("Influencers from RAG: ", JSON.stringify(response.data, null, 2));
     const influencers = await influencerAgent.getInfluencersForCampaignFromLLM(response.data, userPrompt);
+    console.log("Influencers from LLM: ", JSON.stringify(influencers, null, 2));
     return influencers;
 }
 
