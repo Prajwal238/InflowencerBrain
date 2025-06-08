@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
+const AuthMiddleware = require('./src/middleware/authMiddleware');
 require('dotenv').config();
 
 const app = express();
@@ -10,7 +11,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
-
+app.use(AuthMiddleware());
 async function main() {
   try {
     await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/influencer_app', {

@@ -14,6 +14,10 @@ const CampaignSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    companyName: {
+        type: String,
+        required: true
+    },
     description: {
         type: String
     },

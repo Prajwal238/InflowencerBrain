@@ -9,6 +9,7 @@
                     "type": "object",
                     "properties": {
                         "campaignName": { "type": "string", "description": "Campaign name" },
+                        "companyName": { "type": "string", "description": "Company name" },
                         "description": { "type": "string", "description": "Campaign description" },
                         "startDate": { "type": "string", "format": "date-time", "description": "Start date (ISO 8601)" },
                         "endDate": { "type": "string", "format": "date-time", "description": "End date (ISO 8601)" },
@@ -55,6 +56,7 @@
                             "type": "object",
                             "properties": {
                                 "campaignName": { "type": "string", "description": "Campaign name" },
+                                "companyName": { "type": "string", "description": "Company name" },
                                 "description": { "type": "string", "description": "Campaign description" },
                                 "startDate": { "type": "string", "format": "date-time", "description": "Start date (ISO 8601)" },
                                 "endDate": { "type": "string", "format": "date-time", "description": "End date (ISO 8601)" },

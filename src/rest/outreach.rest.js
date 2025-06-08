@@ -3,15 +3,16 @@ const router = express.Router();
 const OutreachService = require('../services/outreachService');
 const { Readable } = require('stream');
 
-router.get('/:userId/campaigns/:campaignId/outreach_seed', async (req, res) => {
-    const { userId, campaignId } = req.params;
+router.get('/campaigns/:campaignId/outreach_seed', async (req, res) => {
+    const userId = req.userId;
+    const { campaignId } = req.params;
     const outreachService = OutreachService.getInst();
     const result = await outreachService.getOutreachSeed(userId, campaignId);
     res.status(200).json(result);
 });
 
-router.post('/:userId/voice_preview', async (req, res) => {
-    const { userId } = req.params;
+router.post('/voice_preview', async (req, res) => {
+    const userId = req.userId;
     const { message, language } = req.body;
     if(!userId || !message || !language) {
         return res.status(400).json({ error: 'userId, message and language are required' });
@@ -31,8 +32,9 @@ router.post('/:userId/voice_preview', async (req, res) => {
     }
 });
 
-router.post('/:userId/campaigns/:campaignId/ai_message', async (req, res) => {
-    const { userId, campaignId } = req.params;
+router.post('/campaigns/:campaignId/ai_message', async (req, res) => {
+    const userId = req.userId;
+    const { campaignId } = req.params;
 
     const outreachService = OutreachService.getInst();
     const result = await outreachService.generateAIMessage(userId, campaignId, req.body);

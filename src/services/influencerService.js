@@ -1,6 +1,7 @@
 const influencerModel = require('../../models/getInfluencerModel');
 const campaignModel = require('../../models/getCampaignsModel');
 const InfluencerAgent = require('../agents/influencerAgent');
+const axios = require('axios');
 
 const influencerAgent = new InfluencerAgent({
     llmApiKey: process.env.OPENAI_API_KEY,
@@ -51,7 +52,21 @@ InfluencerService.prototype.getInfluencersByCampaignId = async function(userId, 
 }
 
 InfluencerService.prototype.getInfluencersForCampaignFromLLM = async function(userId, campaignId, userPrompt) {
-    const influencers = await influencerAgent.getInfluencersForCampaignFromLLM(campaignId, userPrompt);
+    const campaign = await campaignModel.getCampaignById(campaignId);
+
+    const filters = await influencerAgent.getFiltersFromUserPromptForRetrieval(userPrompt);
+    const response = await axios({
+        method: 'POST',
+        url: `${process.env.RAG_SERVER_URL}/rag/discovery`,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          userPrompt: userPrompt || `I need to find the top 5 best influencers for my campaign ${campaign.campaignName} whose objective is ${campaign.objective}`,
+          filters: filters
+        },
+    });
+    const influencers = await influencerAgent.getInfluencersForCampaignFromLLM(response.data, userPrompt);
     return influencers;
 }
 

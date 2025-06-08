@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const influencerMessagesModel = require('../../models/getInfMessagesModel');
 
 router.post('/campaigns/:campaignId/platform/:platform/updateConversation/:InfluencerId', async (req, res) => {
     const { InfluencerId, campaignId, platform } = req.params;
@@ -15,8 +14,8 @@ router.post('/campaigns/:campaignId/platform/:platform/updateConversation/:Influ
     res.json(conversation);
 });
 
-router.get('/:userId/getAllInfluencerConversations', async (req, res) => {
-    const { userId } = req.params;
+router.get('/getAllInfluencerConversations', async (req, res) => {
+    const userId = req.userId;
     if (!userId) {
         return res.status(400).json({ error: 'userId is required.' });
     }
@@ -37,8 +36,8 @@ router.get('/campaigns/:campaignId/platform/:platform/getConversation/:Influence
     res.json(messageThread);
 });
 
-router.post('/:userId/getAIResponse', async (req, res) => {
-    const { userId } = req.params;
+router.post('/getAIResponse', async (req, res) => {
+    const userId = req.userId;
     const { messages } = req.body;
     if (!userId || !messages) {
         return res.status(400).json({ error: 'userId and messages are required.' });
@@ -46,6 +45,25 @@ router.post('/:userId/getAIResponse', async (req, res) => {
     const NegotiatorService = require('../services/negotiatorService');
     const negotiatorService = NegotiatorService.getInst();
     const response = await negotiatorService.getAIResponse(userId, messages);
+    res.json(response);
+});
+
+router.post('/campaigns/:campaignId/makeOutBoundCall', async (req, res) => {
+    const userId = req.userId;
+    const { campaignId } = req.params;
+    const { phoneNumber, influencerName } = req.body;
+
+    let formattedPhoneNumber = phoneNumber;
+    if (!formattedPhoneNumber.startsWith('+91')) {
+        formattedPhoneNumber = '+91' + formattedPhoneNumber;
+    }
+
+    if (!userId || !formattedPhoneNumber || !campaignId || !influencerName) {
+        return res.status(400).json({ error: 'userId, phoneNumber, campaignId and influencerName are required.' });
+    }
+    const NegotiatorService = require('../services/negotiatorService');
+    const negotiatorService = NegotiatorService.getInst();
+    const response = await negotiatorService.makeOutBoundCall(userId, formattedPhoneNumber, campaignId, influencerName);
     res.json(response);
 });
 

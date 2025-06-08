@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const InfluencerService = require('../services/influencerService');
 
-router.get('/:userId/influencers', async (req, res) => {
+router.get('/influencers', async (req, res) => {
     try {
-        const { userId } = req.params;
+        const userId = req.userId;
         if (!userId) {
             return res.status(400).json({ error: 'userId is required.' });
         }
@@ -16,9 +16,10 @@ router.get('/:userId/influencers', async (req, res) => {
     }
 });
 
-router.post('/:userId/campaigns/:campaignId/influencers', async (req, res) => {
+router.post('/campaigns/:campaignId/influencers', async (req, res) => {
     try {
-        const { userId, campaignId } = req.params;
+        const userId = req.userId;
+        const { campaignId } = req.params;
         const { influencerId, removeInfluencerId } = req.body;
         if (!userId || !campaignId || (!influencerId && !removeInfluencerId)) {
             return res.status(400).json({ error: 'userId, campaignId and influencerId are required.' });
@@ -39,9 +40,10 @@ router.post('/:userId/campaigns/:campaignId/influencers', async (req, res) => {
     }
 });
 
-router.get('/:userId/campaigns/:campaignId/influencers', async (req, res) => {
+router.get('/campaigns/:campaignId/influencers', async (req, res) => {
     try {
-        const { userId, campaignId } = req.params;
+        const userId = req.userId;
+        const { campaignId } = req.params;
         if (!userId || !campaignId) {
             return res.status(400).json({ error: 'userId and campaignId are required.' });
         }
@@ -53,9 +55,10 @@ router.get('/:userId/campaigns/:campaignId/influencers', async (req, res) => {
     }
 });
 
-router.get('/:userId/campaigns/:campaignId/influencers/llm', async (req, res) => {
+router.get('/campaigns/:campaignId/influencers/llm', async (req, res) => {
     try {
-        const { userId, campaignId } = req.params;
+        const userId = req.userId;
+        const { campaignId } = req.params;
         if (!userId || !campaignId) {
             return res.status(400).json({ error: 'userId and campaignId are required.' });
         }
@@ -67,9 +70,10 @@ router.get('/:userId/campaigns/:campaignId/influencers/llm', async (req, res) =>
     }
 });
 
-router.post('/:userId/campaigns/:campaignId/influencers/llm', async (req, res) => {
+router.post('/campaigns/:campaignId/influencers/llm', async (req, res) => {
     try {
-        const { userId, campaignId } = req.params;
+        const userId = req.userId;
+        const { campaignId } = req.params;
         const { userPrompt } = req.body;
         if (!userId || !campaignId) {
             return res.status(400).json({ error: 'userId and campaignId are required.' });

@@ -35,10 +35,10 @@ OutreachService.prototype.generateAIMessage = async (userId, campaignId, body) =
 OutreachService.prototype.getVoicePreview = async (userId, message, language) => {
 
     const languageVoiceMap = {
-        en: 'EXAVITQu4vr4xnSDxMaL', // English
-        es: 'TxGEqnHWrfWFTfGW9XjX', // Spanish
-        fr: 'ErXwobaYiN019PkySvjV', // French
-        de: 'MF3mGyEYCl7XYWbV9V6O', // German
+        en: '90ipbRoKi4CpHXvKVtl0', // English
+        es: '90ipbRoKi4CpHXvKVtl0', // Spanish
+        fr: '90ipbRoKi4CpHXvKVtl0', // French
+        de: 'gHu9GtaHOXcSqFTK06ux', // German
     };
     const voiceId = languageVoiceMap[language] || languageVoiceMap['en'];
 

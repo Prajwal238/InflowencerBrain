@@ -4,7 +4,7 @@
             "type": "function",
             "function": {
                 "name": "returnInfluencers",
-                "description": "Return the influencers based on the user preferences",
+                "description": "Use this function when you already have the filters and you need to find the best influencers based on user preferences from the available influencers",
                 "parameters": {
                     "type": "object",
                     "properties": {

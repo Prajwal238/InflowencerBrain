@@ -5,7 +5,8 @@ const CampaignService = require('../services/campaignService');
 // POST /campaigns
 router.post('/campaigns', async (req, res) => {
     try {
-        const { userId, prompt, sessionId } = req.body;
+        const userId = req.userId;
+        const { prompt, sessionId } = req.body;
         if (!userId || !prompt || !sessionId) {
             return res.status(400).json({ error: 'userId, prompt and sessionId are required.' });
         }
@@ -17,8 +18,8 @@ router.post('/campaigns', async (req, res) => {
     }
 });
 
-router.get('/:userId/campaigns', async (req, res) => {
-    const { userId } = req.params;
+router.get('/campaigns', async (req, res) => {
+    const userId = req.userId;
     if (!userId) {
         return res.status(400).json({ error: 'userId is required.' });
     }
@@ -27,8 +28,8 @@ router.get('/:userId/campaigns', async (req, res) => {
     res.status(200).json(result);
 });
 
-router.get('/campaigns/:userId/sessions', async (req, res) => {
-    const { userId } = req.params;
+router.get('/campaigns/sessions', async (req, res) => {
+    const userId = req.userId;
     if (!userId) {
         return res.status(400).json({ error: 'userId is required.' });
     }
@@ -37,10 +38,11 @@ router.get('/campaigns/:userId/sessions', async (req, res) => {
     res.status(200).json(result);
 });
 
-router.get('/campaigns/:userId/sessions/:sessionId', async (req, res) => {
-    const { userId, sessionId } = req.params;
-    if (!userId || !sessionId) {
-        return res.status(400).json({ error: 'userId and sessionId are required.' });
+router.get('/campaigns/sessions/:sessionId', async (req, res) => {
+    const userId = req.userId;
+    const sessionId = req.params.sessionId;
+    if (!sessionId || !userId) {
+        return res.status(400).json({ error: 'sessionId and userId are required.' });
     }
     const campaignService = CampaignService.getInst();
     const result = await campaignService.getMessagesForSession(userId, sessionId);
