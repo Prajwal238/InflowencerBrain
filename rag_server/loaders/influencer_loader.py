@@ -9,7 +9,6 @@ load_dotenv()
 
 def load_influencers_to_vector_db():
     client = MongoClient(os.getenv("MONGODB_URI"))
-    print(os.getenv("MONGODB_URI"))
     collection = client["influencer_app"]["influencers"]
 
     for doc in collection.find():

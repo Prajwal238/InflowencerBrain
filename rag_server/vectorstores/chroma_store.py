@@ -3,7 +3,9 @@ import chromadb
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CHROMA_DB_PATH = os.path.join(BASE_DIR, "..", "chroma_db")
+print("CHROMA_DB_PATH: ", CHROMA_DB_PATH)
 client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
+print("Client: ", client)
 collection = client.get_or_create_collection("influencers")
 
 def add_to_vector_store(embedding, document, metadata):
@@ -15,6 +17,7 @@ def add_to_vector_store(embedding, document, metadata):
     )
 
 def query_vector_store(query_embedding, top_k=10, where=None):
+    print("Collection: ", collection.get())
     results = collection.query(
         query_embeddings=[query_embedding],
         n_results=top_k,
