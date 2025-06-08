@@ -1,9 +1,9 @@
 import os
 from dotenv import load_dotenv
 from pymongo import MongoClient
-from rag_server.embeddings.openai_embedder import embed_text
-from rag_server.vectorstores.chroma_store import add_to_vector_store, count_vector_store
-from rag_server.loaders.generate_rag_doc import generate_rag_doc
+from embeddings.openai_embedder import embed_text
+from vectorstores.chroma_store import add_to_vector_store, count_vector_store
+from loaders.generate_rag_doc import generate_rag_doc
 
 load_dotenv()
 
