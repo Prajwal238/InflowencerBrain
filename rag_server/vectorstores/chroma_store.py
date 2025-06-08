@@ -39,4 +39,5 @@ def query_vector_store(query_embedding, top_k=10, where=None):
     ]
 
 def count_vector_store():
+    print("Collection after adding to vector store: ", collection.get())
     return collection.count()
