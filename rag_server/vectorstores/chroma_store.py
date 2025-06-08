@@ -1,8 +1,11 @@
 import os
 import chromadb
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CHROMA_DB_PATH = os.path.join(BASE_DIR, "..", "chroma_db")
+CHROMA_DB_PATH = os.getenv("CHROMA_DB_PATH") or os.path.join(BASE_DIR, "..", "chroma_db")
 print("CHROMA_DB_PATH: ", CHROMA_DB_PATH)
 client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
 print("Client: ", client)
