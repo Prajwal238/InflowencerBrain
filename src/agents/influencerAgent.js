@@ -36,7 +36,8 @@ InfluencerAgent.prototype.getFiltersFromUserPromptForRetrieval = async function(
                     "categories": {
                     "type": "array",
                     "items": {
-                        "type": "string"
+                        "type": "string",
+                        "enum": ["fashion", "beauty", "fitness", "food", "travel", "lifestyle", "technology", "sports", "music", "art", "gaming", "education", "health", "science", "politics", "business", "entertainment", "other"]
                     },
                     "description": "List of influencer categories like fashion, beauty, fitness"
                     },
