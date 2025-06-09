@@ -39,7 +39,7 @@
                             "description": "Languages (e.g., english, hindi)"
                         }
                     },
-                    "required": ["campaignName", "objective", "totalBudget", "targetAudience", "preferredPlatforms", "languages"]
+                    "required": ["campaignName", "description", "companyName", "objective", "totalBudget", "targetAudience", "preferredPlatforms", "languages"]
                 }
             }
         },
