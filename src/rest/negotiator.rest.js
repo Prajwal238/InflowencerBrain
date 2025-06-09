@@ -16,12 +16,13 @@ router.post('/campaigns/:campaignId/platform/:platform/updateConversation/:Influ
 
 router.get('/getAllInfluencerConversations', async (req, res) => {
     const userId = req.userId;
-    if (!userId) {
-        return res.status(400).json({ error: 'userId is required.' });
+    const { campaignId } = req.query;
+    if (!userId || !campaignId) {
+        return res.status(400).json({ error: 'userId and campaignId are required.' });
     }
     const NegotiatorService = require('../services/negotiatorService');
     const negotiatorService = NegotiatorService.getInst();
-    const conversations = await negotiatorService.getAllInfluencerConversations(userId);
+    const conversations = await negotiatorService.getAllInfluencerConversations(campaignId);
     res.json(conversations);
 });
 

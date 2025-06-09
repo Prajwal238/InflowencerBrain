@@ -13,8 +13,8 @@ const negotiatorAgent = new NegotiatorAgent({
 
 function NegotiatorService() {}
 
-NegotiatorService.prototype.getAllInfluencerConversations = async function() {
-    const conversations = await influencerMessagesModel.getAllInfluencerConversations();
+NegotiatorService.prototype.getAllInfluencerConversations = async function(campaignId) {
+    const conversations = await influencerMessagesModel.getAllInfluencerConversations(campaignId);
     return conversations;
 }
 

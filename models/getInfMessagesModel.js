@@ -1,8 +1,8 @@
 const { InfluencerConversation } = require('../dbSchema/influencerConverationModel');
 
 
-async function getAllInfluencerConversations() {
-    const conversations = await InfluencerConversation.find();
+async function getAllInfluencerConversations(campaignId) {
+    const conversations = await InfluencerConversation.find({ campaignId });
     return conversations;
 }
 
