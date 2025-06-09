@@ -67,5 +67,28 @@ router.post('/campaigns/:campaignId/makeOutBoundCall', async (req, res) => {
     res.json(response);
 });
 
+router.get('/getCampaignDetails', async (req, res) => {
+    const { campaignName } = req.query;
+    if (!campaignName) {
+        return res.status(400).json({ error: 'campaignName is required.' });
+    }
+    const NegotiatorService = require('../services/negotiatorService');
+    const negotiatorService = NegotiatorService.getInst();
+    const campaignDetails = await negotiatorService.getCampaignDetails(campaignName);
+    res.json(campaignDetails);
+});
+
+router.post('/confirmNegotionTerms', async (req, res) => {
+    const { campaignName, influencerName, negotiationTerms } = req.body;
+    const contract = { campaignName, influencerName, negotiationTerms };
+    if (!campaignName || !influencerName || !negotiationTerms) {
+        return res.status(400).json({ error: 'campaignName, influencerName, and negotiationTerms are required.' });
+    }
+    const NegotiatorService = require('../services/negotiatorService');
+    const negotiatorService = NegotiatorService.getInst();
+    const response = await negotiatorService.confirmNegotionTerms(contract);
+    res.json(response);
+});
+
 module.exports = router;
 

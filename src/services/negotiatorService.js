@@ -2,6 +2,8 @@ const influencerMessagesModel = require('../../models/getInfMessagesModel');
 const NegotiatorAgent = require('../agents/negotiatorAgent');
 const campaignModel = require('../../models/getCampaignsModel');
 const axios = require('axios');
+const { v4: uuidv4 } = require('uuid');
+const contractModel = require('../../models/getContractsModel');
 
 const negotiatorAgent = new NegotiatorAgent({
     llmApiKey: process.env.OPENAI_API_KEY,
@@ -42,7 +44,8 @@ NegotiatorService.prototype.makeOutBoundCall = async function(userId, phoneNumbe
             conversation_initiation_client_data: {
                 dynamic_variables: {
                     "Influencer_name": influencerName,
-                    "company_name": campaign.companyName
+                    "company_name": campaign.companyName,
+                    "campaign_name": campaign.campaignName
                 }
             }
         }, {
@@ -58,6 +61,36 @@ NegotiatorService.prototype.makeOutBoundCall = async function(userId, phoneNumbe
         return {
             status: 'error',
             message: 'Failed to make outbound call JSON: ' + JSON.stringify(err.response.data)
+        };
+    }
+}
+
+NegotiatorService.prototype.getCampaignDetails = async function(campaignName) {
+    const campaign = await campaignModel.getCampaignByName(campaignName);
+    return campaign;
+}
+
+NegotiatorService.prototype.confirmNegotionTerms = async function(contract) {
+    const _id = "contract-" + uuidv4();
+
+    if(contract.campaignName){
+        contract.campaignName = contract.campaignName.toLowerCase();
+        const campaign = await campaignModel.getCampaignByName(contract.campaignName);
+        contract.campaignId = campaign?._id;
+    }
+    if(contract.negotiationTerms.length > 0){
+        contract.contractStatus = "tobesigned";
+    }
+    const response = await contractModel.createContract({ _id, ...contract });
+    if(response){
+        return {
+            status: 'success',
+            message: 'Contract created successfully'
+        };
+    } else {
+        return {
+            status: 'error',
+            message: 'Failed to create contract'
         };
     }
 }

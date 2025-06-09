@@ -2,7 +2,8 @@ const jwt = require('jsonwebtoken');
 
 function AuthMiddleware() {
     function verifyToken(req, res, next) {
-        if((req.path === '/api/signup' || req.path === '/api/login') && req.method === 'POST'){
+        const excemptedPaths = ['/api/signup', '/api/login', '/api/waitlist', '/api/getCampaignDetails', '/api/confirmNegotionTerms'];
+        if(excemptedPaths.includes(req.path)){
             return next();
         }
         

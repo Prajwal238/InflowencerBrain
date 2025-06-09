@@ -30,10 +30,15 @@ async function getCampaignById(id) {
     return await Campaign.findById(id).lean();
 }
 
+async function getCampaignByName(campaignName) {
+    return await Campaign.findOne({ campaignName });
+}
+
 module.exports = {
     insertCampaign,
     getAllCampaigns,
     getCampaignById,
     updateCampaign,
-    updateCampaignById
+    updateCampaignById,
+    getCampaignByName
 };
