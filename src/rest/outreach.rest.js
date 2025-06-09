@@ -32,6 +32,20 @@ router.post('/voice_preview', async (req, res) => {
     }
 });
 
+router.post('/outreach/:campaignId/platform/:platform/updateConversation/:InfluencerId', async (req, res) => {
+    const { InfluencerId, campaignId, platform } = req.params;
+    const newMessage = req.body;
+
+    if (!InfluencerId || !campaignId || !platform) {
+        return res.status(400).json({ error: 'InfluencerId, campaignId and platform are required.' });
+    }
+    const OutreachService = require('../services/outreachService');
+    const outreachService = OutreachService.getInst();
+    var opts = {firstMessage: true};
+    const conversation = await outreachService.updateConversation(InfluencerId, campaignId, platform, newMessage, opts);
+    res.json(conversation);
+});
+
 router.post('/campaigns/:campaignId/ai_message', async (req, res) => {
     const userId = req.userId;
     const { campaignId } = req.params;

@@ -1,5 +1,6 @@
 const campaignModel = require('../../models/getCampaignsModel');
 const influencerModel = require('../../models/getInfluencerModel');
+const influencerMessagesModel = require('../../models/getInfMessagesModel');
 const axios = require('axios');
 const OutReachAgent = require('../agents/outReachAgent');
 
@@ -66,6 +67,11 @@ OutreachService.prototype.getVoicePreview = async (userId, message, language) =>
         console.error('Error generating speech:', error.message);
         res.status(500).json({ error: 'Failed to generate speech' });
     }
+}
+
+OutreachService.prototype.updateConversation = async function(influencerId, campaignId, platform, newMessage, opts={}) {
+    const conversation = await influencerMessagesModel.updateConversation(influencerId, campaignId, platform, newMessage, opts);
+    return conversation;
 }
 
 module.exports = {
