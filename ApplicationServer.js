@@ -4,7 +4,10 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 const AuthMiddleware = require('./src/middleware/authMiddleware');
+const passport = require('passport');
+
 require('dotenv').config();
+require('./src/auth/oauth');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -12,6 +15,8 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 app.use(AuthMiddleware());
+app.use(passport.initialize());
+
 async function main() {
   try {
     await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/influencer_app', {

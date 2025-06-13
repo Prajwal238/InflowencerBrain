@@ -2,11 +2,11 @@ const jwt = require('jsonwebtoken');
 
 function AuthMiddleware() {
     function verifyToken(req, res, next) {
-        const excemptedPaths = ['/api/signup', '/api/login', '/api/waitlist', '/api/getCampaignDetails', '/api/confirmNegotionTerms'];
-        if(excemptedPaths.includes(req.path)){
+        const excemptedPaths = ['/api/signup', '/api/login', '/api/waitlist', '/api/getCampaignDetails', '/api/confirmNegotionTerms', '/api/auth/google', '/api/auth/google/callback'];
+        if(excemptedPaths.includes(req.path) || req.path.includes('api/auth/')){
             return next();
         }
-        
+
         const token = req.header('Authorization');
         if (!token) {
             return res.status(401).json({ error: 'Unauthorized' });
