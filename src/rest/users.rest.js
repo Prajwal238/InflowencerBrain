@@ -34,7 +34,8 @@ router.get('/auth/google', passport.authenticate('google', {
     scope: [
       'profile',
       'email',
-      'https://www.googleapis.com/auth/documents'
+      'https://www.googleapis.com/auth/documents.readonly',
+      'https://www.googleapis.com/auth/drive.metadata.readonly'
     ],
     accessType: 'offline',
     prompt: 'consent' // forces refreshToken every time (good for testing)
@@ -48,7 +49,7 @@ router.get('/auth/google/callback',
     }),
     (req, res) => {
         const token = jwt.sign({ userId: req.user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.redirect(`${process.env.FRONTEND_HOST_URL}/api/auth/?token=${token}`);
+        res.redirect(`${process.env.FRONTEND_HOST_URL}/auth/callback/?token=${token}`);
     }
 );
 
