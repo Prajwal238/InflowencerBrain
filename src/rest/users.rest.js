@@ -48,7 +48,7 @@ router.get('/auth/google/callback',
     }),
     (req, res) => {
         const token = jwt.sign({ userId: req.user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.redirect(`${process.env.HOST_URL}/api/auth/?token=${token}`);
+        res.redirect(`${process.env.FRONTEND_HOST_URL}/api/auth/?token=${token}`);
     }
 );
 
