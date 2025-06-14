@@ -23,6 +23,10 @@ const InfluencerConversationSchema = new mongoose.Schema({
         required: true
     },
 
+    convId: {
+        type: String,
+    },
+
     messages: [
         { 
             type: mongoose.Schema.Types.Mixed,

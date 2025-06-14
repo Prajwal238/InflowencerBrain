@@ -39,8 +39,23 @@ async function updateConversation(influencerName, campaignId, platform, newMessa
     return conversation?.messages || [];
 }
 
+async function updateConversationByCampaignIdandInfluencerName(campaignId, influencerName, convId) {
+    const conversation = await InfluencerConversation.findOneAndUpdate(
+        { campaignId, influencerName },
+        { $set: { convId: convId } },
+    );
+    return conversation;
+}
+
+async function getCOnversationById(influencerMsgsId) {
+    const conversation = await InfluencerConversation.findOne({ _id: influencerMsgsId });
+    return conversation;
+}
+
 module.exports = { 
     getInfluencerConversation,
     updateConversation,
-    getAllInfluencerConversations
+    getAllInfluencerConversations,
+    updateConversationByCampaignIdandInfluencerName,
+    getCOnversationById
 };

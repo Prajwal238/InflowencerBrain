@@ -45,7 +45,8 @@ NegotiatorService.prototype.makeOutBoundCall = async function(userId, phoneNumbe
                 dynamic_variables: {
                     "Influencer_name": influencerName,
                     "company_name": campaign.companyName,
-                    "campaign_name": campaign.campaignName
+                    "campaign_name": campaign.campaignName,
+                    "campaignId": campaign._id
                 }
             }
         }, {
@@ -70,9 +71,12 @@ NegotiatorService.prototype.getCampaignDetails = async function(campaignName) {
     return campaign;
 }
 
-NegotiatorService.prototype.confirmNegotionTerms = async function(contract) {
+NegotiatorService.prototype.confirmNegotionTerms = async function(contract, opts) {
     const _id = "contract-" + uuidv4();
 
+    if(opts?.convId && opts?.campaignId){
+        await influencerMessagesModel.updateConversationByCampaignIdandInfluencerName(opts.campaignId, contract.influencerName, opts.convId);
+    }
     if(contract.campaignName){
         contract.campaignName = contract.campaignName.toLowerCase();
         const campaign = await campaignModel.getCampaignByName(contract.campaignName);
@@ -91,6 +95,33 @@ NegotiatorService.prototype.confirmNegotionTerms = async function(contract) {
         return {
             status: 'error',
             message: 'Failed to create contract'
+        };
+    }
+}
+
+NegotiatorService.prototype.getCallConversations = async function(campaignId, influencerId) {
+    try{
+        const result ={}
+        const influencerConversation = await influencerMessagesModel.getCOnversationById(influencerId);
+        if(!influencerConversation.convId){
+            return result;
+        }
+        const response = await axios.get(`https://api.elevenlabs.io/v1/convai/conversations/${influencerConversation.convId}`, {
+            headers: {
+                'xi-api-key': process.env.ELEVENLABS_API_KEY,
+            'Content-Type': 'application/json'
+        }
+        });
+        result.transcript = response.data.transcript;
+        result.status = response.data.status;
+        result.influencerInterest = response.data.analysis.data_collection_results.InfluencerInterest.value ? "Interested" : "Not Interested";
+        result.callDurationSeconds = response.data.metadata.call_duration_secs;
+        return result;    
+
+    } catch(err){
+        return {
+            status: 'error',
+            message: 'Failed to make outbound call JSON: ' + JSON.stringify(err.response.data)
         };
     }
 }

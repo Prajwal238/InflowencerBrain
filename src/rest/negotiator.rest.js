@@ -31,10 +31,20 @@ router.get('/campaigns/:campaignId/platform/:platform/getConversation/:Influence
     if (!InfluencerId || !campaignId || !platform) {
         return res.status(400).json({ error: 'InfluencerId, campaignId and platform are required.' });
     }
+
     const NegotiatorService = require('../services/negotiatorService');
     const negotiatorService = NegotiatorService.getInst();  
-    const messageThread = await negotiatorService.getConversation(InfluencerId, campaignId, platform);
-    res.json(messageThread);
+    if(req?.query?.poll) {
+        const newMessage = {
+            role: "Influencor",
+            message: `Sure! Here is my contact number, ${process.env.PHONE_NUMBER}, Lets talk over call?`
+        }
+        const conversation = await negotiatorService.updateConversation(InfluencerId, campaignId, platform, newMessage);
+        res.json(conversation);
+    } else {
+        const messageThread = await negotiatorService.getConversation(InfluencerId, campaignId, platform);
+        res.json(messageThread);
+    }
 });
 
 router.post('/getAIResponse', async (req, res) => {
@@ -80,15 +90,23 @@ router.get('/getCampaignDetails', async (req, res) => {
 });
 
 router.post('/confirmNegotionTerms', async (req, res) => {
-    const { campaignName, influencerName, negotiationTerms } = req.body;
+    const { campaignName, influencerName, negotiationTerms, convId, campaignId } = req.body;
     const contract = { campaignName, influencerName, negotiationTerms };
-    if (!campaignName || !influencerName || !negotiationTerms) {
-        return res.status(400).json({ error: 'campaignName, influencerName, and negotiationTerms are required.' });
+    if (!campaignName || !influencerName || !negotiationTerms || !convId || !campaignId) {
+        return res.status(400).json({ error: 'campaignName, influencerName, convId, campaignId and negotiationTerms are required.' });
     }
     const NegotiatorService = require('../services/negotiatorService');
     const negotiatorService = NegotiatorService.getInst();
-    const response = await negotiatorService.confirmNegotionTerms(contract);
+    const response = await negotiatorService.confirmNegotionTerms(contract, {convId, campaignId});
     res.json(response);
+});
+
+router.get('/getConversation/:campaignId/:influencerId', async (req, res) => {
+    const { campaignId, influencerId } = req.params;
+    const NegotiatorService = require('../services/negotiatorService');
+    const negotiatorService = NegotiatorService.getInst();
+    const conversation = await negotiatorService.getCallConversations(campaignId, influencerId);
+    res.json(conversation);
 });
 
 module.exports = router;
