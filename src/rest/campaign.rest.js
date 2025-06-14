@@ -66,4 +66,16 @@ router.get('/campaigns/sessions/:sessionId', async (req, res) => {
     res.status(200).json(result);
 });
 
+router.get('/google/docs', async (req, res) => {
+    try{
+        const user = req.userId;
+        const campaignService = CampaignService.getInst();
+        const result = await campaignService.getGoogleDocsForUser(user);
+        res.status(200).json(result);
+    } catch (err) {
+        res.status(400).json({ error: 'Failed to get Google docs', details: err.message });
+    }
+  });
+  
+
 module.exports = router;

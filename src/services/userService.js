@@ -27,6 +27,9 @@ UserService.prototype.login = async function(email, password) {
     if (!user) {
         return { error: 'Authentication failed' };
     }
+    if(user.authProvider === 'google'){
+        return { error: 'Please use Google Sign-In for this account.' };
+    }
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
         return { error: 'Authentication failed' };

@@ -10,30 +10,41 @@ passport.use(new GoogleStrategy({
     passReqToCallback: true
   }, async (req, accessToken, refreshToken, profile, done) => {
     try {
-      let user = await userModel.getUserByGoogleId(profile.id);
-  
-      if (!user) {
-        user = await userModel.getUserByEmail(profile.emails[0].value);
-      }
-  
-      if (!user) {
-        user = await userModel.createUserByGoogle({
-          _id: "u-" + uuidv4(),
-          email: profile.emails[0].value,
-          name: profile.displayName,
-          googleId: profile.id,
-          authProvider: 'google',
-          googleDocsAccessToken: accessToken,
-          googleDocsRefreshToken: refreshToken
+        let isSelfSignedUser = false;
+        await userModel.getUserByEmail(profile.emails[0].value).then(user => {
+            if(user && user.authProvider === 'local'){
+                isSelfSignedUser = true;
+            }
         });
-      } else {
-        user.googleDocsAccessToken = accessToken;
-        user.googleDocsRefreshToken = refreshToken;
-        await user.save();
-      }
-  
-      done(null, user);
+
+        if(isSelfSignedUser){
+            return done(null, false, { message: 'Use email and password to login.' });
+        }
+
+        let user = await userModel.getUserByGoogleId(profile.id);
+    
+        if (!user) {
+            user = await userModel.getUserByEmail(profile.emails[0].value);
+        }
+    
+        if (!user) {
+            user = await userModel.createUserByGoogle({
+            _id: "u-" + uuidv4(),
+            email: profile.emails[0].value,
+            name: profile.displayName,
+            googleId: profile.id,
+            authProvider: 'google',
+            googleDocsAccessToken: accessToken,
+            googleDocsRefreshToken: refreshToken
+            });
+        } else {
+            user.googleDocsAccessToken = accessToken;
+            user.googleDocsRefreshToken = refreshToken;
+            await user.save();
+        }
+    
+        done(null, user);
     } catch (err) {
-      done(err, null);
+        done(err, null);
     }
 }));

@@ -1,12 +1,14 @@
 const CampaignAgent = require('../agents/campaignAgent');
 const messageModel = require('../../models/getMessagesModel');
 const campaignModel = require('../../models/getCampaignsModel');
+const userModel = require('../../models/getUsersModel');
 const crypto = require('crypto');
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 const FormData = require('form-data');
 const ffmpeg = require('fluent-ffmpeg');
+const { google } = require('googleapis');
 
 const campaignAgent = new CampaignAgent({
     llmApiKey: process.env.OPENAI_API_KEY,
@@ -48,15 +50,44 @@ function extractDocId(link) {
     return match ? match[1] : null;
 }
 
-async function extractTextFromLink(link) {
+async function extractTextFromLink(link, userId) {
+    // const user = await userModel.getUserById(userId);
     const docId = extractDocId(link);
     if (!docId) {
-        return res.status(400).json({ error: 'Invalid document link' });
+        throw new Error('Invalid document link');
     }
     const exportUrl = `https://docs.google.com/document/d/${docId}/export?format=txt`;
     const response = await axios.get(exportUrl);
     const text = response.data;
     return text;
+
+    // if(user.authProvider === 'google') {
+
+    //     const oauth2Client = new google.auth.OAuth2(
+    //         process.env.GOOGLE_CLIENT_ID,
+    //         process.env.GOOGLE_CLIENT_SECRET,
+    //         process.env.GOOGLE_REDIRECT_URI
+    //     );
+    
+    //     oauth2Client.setCredentials({
+    //         access_token: user.googleDocsAccessToken,
+    //         refresh_token: user.googleDocsRefreshToken
+    //     });
+    
+    //     const docs = google.docs({ version: 'v1', auth: oauth2Client });
+    //     const doc = await docs.documents.get({ documentId: docId });
+    //     return doc.data;
+
+    // } else {
+    //     if (!docId) {
+    //         throw new Error('Invalid document link');
+    //     }
+    //     const exportUrl = `https://docs.google.com/document/d/${docId}/export?format=txt`;
+    //     const response = await axios.get(exportUrl);
+    //     const text = response.data;
+    //     return text;
+    // }
+      
 }
 
 CampaignService.prototype.createCampaignWithAgent = async function(userId, prompt, sessionId, link) {
@@ -64,7 +95,7 @@ CampaignService.prototype.createCampaignWithAgent = async function(userId, promp
     const userMessages = await messageModel.fetchMessagesForUser(userId, sessionId, campaignAgent.agentName);
 
     if(prompt.startsWith('https://docs.google.com/document/d/')) {
-        const text = await extractTextFromLink(prompt);
+        const text = await extractTextFromLink(prompt, userId);
         prompt = text;
     }
 
@@ -133,6 +164,31 @@ CampaignService.prototype.processVoiceMessage = async function(userId, sessionId
 
     return await this.createCampaignWithAgent(userId, transcript, sessionId);
 
+}
+
+CampaignService.prototype.getGoogleDocsForUser = async function(userId) {
+    const user = await userModel.getUserById(userId);
+
+    const oauth2Client = new google.auth.OAuth2(
+        process.env.GOOGLE_CLIENT_ID,
+        process.env.GOOGLE_CLIENT_SECRET,
+        process.env.GOOGLE_REDIRECT_URI
+      );
+      
+    oauth2Client.setCredentials({
+      access_token: user.googleDocsAccessToken,
+      refresh_token: user.googleDocsRefreshToken
+    });
+  
+    const drive = google.drive({ version: 'v3', auth: oauth2Client });
+  
+    const response = await drive.files.list({
+      q: "mimeType='application/vnd.google-apps.document'",
+      fields: 'files(id, name, modifiedTime)',
+      pageSize: 20
+    });
+
+    return response.data.files;
 }
 
 module.exports = {

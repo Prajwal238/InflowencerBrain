@@ -22,9 +22,15 @@ async function getUserByGoogleId(googleId) {
     return user;
 }
 
+async function getUserById(userId) {
+    const user = await User.findOne({ _id: userId });
+    return user;
+}
+
 module.exports = {
     createUser,
     getUserByEmail,
     getUserByGoogleId,
-    createUserByGoogle
+    createUserByGoogle,
+    getUserById
 }
