@@ -12,6 +12,7 @@ const CampaignSchema = new mongoose.Schema({
     campaignName: {
         type: String,
         required: true,
+        unique: true
     },
     companyName: {
         type: String,
