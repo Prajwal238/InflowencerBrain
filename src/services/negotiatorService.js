@@ -75,7 +75,11 @@ NegotiatorService.prototype.confirmNegotionTerms = async function(contract, opts
     const _id = "contract-" + uuidv4();
 
     if(opts?.convId && opts?.campaignId){
-        await influencerMessagesModel.updateConversationByCampaignIdandInfluencerName(opts.campaignId, contract.influencerName, opts.convId);
+        try{
+            await influencerMessagesModel.updateConversationByCampaignIdandInfluencerName(opts.campaignId, contract.influencerName, opts.convId);
+        } catch(err){
+            console.log("Error updating conversation: ", JSON.stringify(err));
+        }
     }
     if(contract.campaignName){
         contract.campaignName = contract.campaignName.toLowerCase();
@@ -121,7 +125,7 @@ NegotiatorService.prototype.getCallConversations = async function(campaignId, in
     } catch(err){
         return {
             status: 'error',
-            message: 'Failed to make outbound call JSON: ' + JSON.stringify(err.response.data)
+            message: 'Failed to make outbound call JSON: ' + JSON.stringify(err.response?.data)
         };
     }
 }
