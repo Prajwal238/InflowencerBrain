@@ -81,11 +81,7 @@ NegotiatorService.prototype.confirmNegotionTerms = async function(contract, opts
             console.log("Error updating conversation: ", JSON.stringify(err));
         }
     }
-    if(contract.campaignName){
-        contract.campaignName = contract.campaignName.toLowerCase();
-        const campaign = await campaignModel.getCampaignByName(contract.campaignName);
-        contract.campaignId = campaign?._id;
-    }
+    contract.campaignId = opts?.campaignId;
     if(contract.negotiationTerms.length > 0){
         contract.contractStatus = "tobesigned";
     }
